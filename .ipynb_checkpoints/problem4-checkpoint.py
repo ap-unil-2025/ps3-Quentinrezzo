@@ -30,8 +30,9 @@ def count_words(filename):
     Returns:
         int: Total number of words
     """
-    # TODO: Open file and count words
-    # Hint: Use split() to separate words
+    with open(filename, 'r', encoding='utf-8') as f:
+        text = f.read()
+    return len(text.split())
     pass
 
 
@@ -45,7 +46,8 @@ def count_lines(filename):
     Returns:
         int: Total number of lines
     """
-    # TODO: Open file and count lines
+    with open(filename, 'r', encoding='utf-8') as f:
+        return sum(1 for _ in f)
     pass
 
 
@@ -60,8 +62,11 @@ def count_characters(filename, include_spaces=True):
     Returns:
         int: Total number of characters
     """
-    # TODO: Open file and count characters
-    # If include_spaces is False, don't count spaces
+    with open(filename, 'r', encoding='utf-8') as f:
+        text = f.read()
+    if include_spaces:
+        return len(text)
+    return sum(1 for ch in text if not ch.isspace())
     pass
 
 
@@ -75,8 +80,15 @@ def find_longest_word(filename):
     Returns:
         str: The longest word found
     """
-    # TODO: Find the longest word
-    # Hint: You might need to remove punctuation
+    import string
+    with open(filename, 'r', encoding='utf-8') as f:
+        text = f.read()
+
+    table = str.maketrans('', '', string.punctuation)
+    words = [w.translate(table) for w in text.split()]
+    words = [w for w in words if w]
+
+    return max(words, key=len) if words else ""
     pass
 
 
@@ -95,11 +107,14 @@ def word_frequency(filename):
 
     frequency = {}
 
-    # TODO: Open file
-    # TODO: Read all words
-    # TODO: Convert to lowercase
-    # TODO: Remove punctuation (use string.punctuation)
-    # TODO: Count frequency of each word
+    with open(filename, 'r', encoding='utf-8') as f:
+        text = f.read().lower()
+
+    table = str.maketrans('', '', string.punctuation)
+    cleaned = text.translate(table)
+    
+    for word in cleaned.split():
+        frequency[word] = frequency.get(word, 0) + 1
 
     return frequency
 

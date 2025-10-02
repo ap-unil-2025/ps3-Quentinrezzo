@@ -1,0 +1,3 @@
+7ce3e12 Personalize hello message
+9964744 Add hello_git.py
+6e9143c Initial commit: Add README
